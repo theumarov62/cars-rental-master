@@ -28,9 +28,36 @@ const Home = () => {
       <SelectCategory />
 
       <section className="all-cars">
-        <div className="mycon">
+        <div className="mycon grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 pt-[100px] pb-[100px]">
           {data &&
-            data?.data.map((car) => <div key={car.id}> {car.name} </div>)}
+            data?.data.map((car) => (
+              <div
+                key={car.id}
+                className="
+    w-[220px] p-4 
+    bg-white 
+    border border-gray-200 
+    rounded-xl 
+    shadow-md 
+    hover:shadow-lg 
+    transition 
+    duration-300 
+    cursor-pointer
+  "
+              >
+                <img
+                  src={car.image}
+                  alt={car.name}
+                  className="w-full h-[130px] object-cover rounded-lg mb-3"
+                />
+
+                <h2 className="text-lg font-semibold text-gray-800">
+                  {car.name}
+                </h2>
+
+                <p className="text-sm text-gray-600">Drive: {car.drive}</p>
+              </div>
+            ))}
         </div>
       </section>
 

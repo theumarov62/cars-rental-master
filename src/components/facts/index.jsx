@@ -1,82 +1,71 @@
 function Facts() {
   return (
     <section>
-      <div className="max-w-[1400px] ml-auto mr-auto pt-[60px] pb-[125px] bg-[#5937E0] rounded-[20px] bg-[url(./images/facts-images/facts-bg-img-2.svg)] bg-no-repeat ">
-        <div className="flex flex-col gap-[20px] text-center mb-[80px]">
-          <h2 className="text-[50px] font-[700] text-white">
+      <div
+        className="
+      max-w-[1400px] mx-auto 
+      pt-10 pb-24 
+      bg-[#5937E0] rounded-2xl 
+      bg-[url(./images/facts-images/facts-bg-img-2.svg)] bg-no-repeat
+      px-4 sm:px-6 lg:px-20
+    "
+      >
+        {/* Header */}
+        <div className="flex flex-col gap-4 text-center mb-16">
+          <h2 className="text-[28px] sm:text-[36px] lg:text-[50px] font-bold text-white leading-tight">
             Facts in numbers
           </h2>
-          <p className="font-[400] text-[16px] text-white">
+
+          <p className="font-normal text-[14px] sm:text-[16px] text-white leading-relaxed">
             Amet cras hac orci lacus. Faucibus ipsum arcu lectus nibh sapien
             bibendum ullamcorper in. Diam tincidunt tincidunt erat at semper
-            fermentum
+            fermentum.
           </p>
         </div>
 
-        {/* Mini cards */}
-        <div className="flex items-center justify-center gap-[64px]">
-          <div className="w-[240px] h-[100px] rounded-[20px] bg-[white] gap-[16px] flex items-center justify-start pl-4">
-            <div className="w-[72px] h-[68px] bg-[#FF9E0C] rounded-[12px] flex items-center justify-center">
-              <img
-                src="./images/facts-images/mini-card-img-1.svg"
-                alt="Mini card img"
-              />
-            </div>
-            <div>
-              <p className="font-[700] text-[24px] text-black">540+</p>
-              <span className="font-[600] text-[16px] text-black opacity-[60%]">
-                Cars
-              </span>
-            </div>
-          </div>
+        {/* Cards container */}
+        <div
+          className="
+        flex flex-col 
+        sm:flex-row sm:flex-wrap 
+        items-center justify-center 
+        gap-6 sm:gap-8 lg:gap-16
+      "
+        >
+          {[
+            { value: "540+", label: "Cars" },
+            { value: "20k+", label: "Customers" },
+            { value: "25+", label: "Years" },
+            { value: "20m+", label: "Miles" },
+          ].map((card, idx) => (
+            <div
+              key={idx}
+              className="
+            w-full max-w-[300px]
+            sm:w-[240px] 
+            h-[100px] 
+            rounded-2xl bg-white 
+            gap-4 flex items-center justify-start 
+            pl-4
+          "
+            >
+              <div className="w-[72px] h-[68px] bg-[#FF9E0C] rounded-xl flex items-center justify-center">
+                <img
+                  src="./images/facts-images/mini-card-img-1.svg"
+                  alt="Mini card img"
+                />
+              </div>
 
-          {/* Mini card 2 */}
-          <div className="w-[240px] h-[100px] rounded-[20px] bg-[white] gap-[16px] flex items-center justify-start pl-4">
-            <div className="w-[72px] h-[68px] bg-[#FF9E0C] rounded-[12px] flex items-center justify-center">
-              <img
-                src="./images/facts-images/mini-card-img-1.svg"
-                alt="Mini card img"
-              />
+              <div>
+                <p className="font-bold text-[22px] sm:text-[24px] text-black leading-tight">
+                  {card.value}
+                </p>
+                <span className="font-semibold text-[14px] sm:text-[16px] text-black opacity-60">
+                  {card.label}
+                </span>
+              </div>
             </div>
-            <div>
-              <p className="font-[700] text-[24px] text-black">20k+</p>
-              <span className="font-[600] text-[16px] text-black opacity-[60%]">
-                Customers
-              </span>
-            </div>
-          </div>
-
-          {/* Mini card 3 */}
-          <div className="w-[240px] h-[100px] rounded-[20px] bg-[white] gap-[16px] flex items-center justify-start pl-4">
-            <div className="w-[72px] h-[68px] bg-[#FF9E0C] rounded-[12px] flex items-center justify-center">
-              <img
-                src="./images/facts-images/mini-card-img-1.svg"
-                alt="Mini card img"
-              />
-            </div>
-            <div>
-              <p className="font-[700] text-[24px] text-black">25+</p>
-              <span className="font-[600] text-[16px] text-black opacity-[60%]">
-                Years
-              </span>
-            </div>
-          </div>
-
-          {/* Mini card 4 */}
-          <div className="w-[240px] h-[100px] rounded-[20px] bg-[white] gap-[16px] flex items-center justify-start pl-4">
-            <div className="w-[72px] h-[68px] bg-[#FF9E0C] rounded-[12px] flex items-center justify-center">
-              <img
-                src="./images/facts-images/mini-card-img-1.svg"
-                alt="Mini card img"
-              />
-            </div>
-            <div>
-              <p className="font-[700] text-[24px] text-black">20m+</p>
-              <span className="font-[600] text-[16px] text-black opacity-[60%]">
-                Miles
-              </span>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>

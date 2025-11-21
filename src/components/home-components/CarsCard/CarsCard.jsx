@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 function CarsCard({ car }) {
   const { image, name, id } = car;
   return (
-    <Link
+    <div
       to={`/cars${id}`}
       className="  w-[220px] p-4
 //     bg-white
@@ -22,7 +22,7 @@ function CarsCard({ car }) {
         alt=""
       />
       <h2 className="text-lg font-semibold text-gray-800">{name}</h2>
-    </Link>
+    </div>
   );
 }
 

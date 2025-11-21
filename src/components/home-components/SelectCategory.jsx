@@ -14,15 +14,17 @@ const SelectCategory = ({ type, setType }) => {
 
         <div className="w-[80%] m-auto flex items-center justify-center gap-5">
           {categorys.map((LocalType, idx) => {
-            <button
-              onClick={() => setType(LocalType)}
-              key={idx}
-              className={`${
-                LocalType == type ? "bg-purple-500" : "bg-gray-500"
-              } p-3 rounded-3xl text-white`}
-            >
-              {LocalType.toUpperCase()}
-            </button>;
+            return (
+              <button
+                onClick={() => setType(LocalType)}
+                key={idx}
+                className={`${
+                  LocalType == type ? "bg-purple-500" : "bg-gray-500"
+                } p-3 rounded-3xl text-white cursor-pointer`}
+              >
+                {LocalType.toUpperCase()}
+              </button>
+            );
           })}
         </div>
       </div>

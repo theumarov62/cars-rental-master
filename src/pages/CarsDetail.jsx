@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import useAxios from "../hooks/useAxios";
+import { Pencil2Icon } from "@radix-ui/react-icons";
 
 const CarsDetail = () => {
   const axios = useAxios();
   const { id } = useParams();
+  const navigate = useNavigate();
   const [car, setCar] = useState(null);
   const [loading, setLoading] = useState(true);
   const getSingleCar = async (id) => {
@@ -127,6 +129,17 @@ const CarsDetail = () => {
               className="w-full h-24 object-cover rounded"
             />
           ))}
+        </div>
+
+        {/* Btn */}
+        <div>
+          <button
+            onClick={() => {
+              navigate(`/edit/${id}`);
+            }}
+            className="w-[200px] border-black border-2 h-[20px]"
+            icon={<Pencil2Icon />}
+          ></button>
         </div>
       </div>
     </div>

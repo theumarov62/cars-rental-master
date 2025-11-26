@@ -8,11 +8,12 @@ import Hero from "../components/hero";
 import Facts from "../components/facts";
 import Footer from "../components/footer";
 import CarsCard from "../components/home-components/CarsCard/CarsCard";
-  
+
 const Home = () => {
   const dispatch = useDispatch();
   const { data } = useSelector((state) => state.carsdata);
   const axios = useAxios();
+  const [loading, setLoading] = useState(true);
   const [type, setType] = useState("all");
 
   const getCars = async (type) => {

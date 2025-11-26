@@ -8,27 +8,23 @@ const CarsDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [car, setCar] = useState(null);
-  const [loading, setLoading] = useState(true);
   const getSingleCar = async (id) => {
-    try {
-      const res = await axios({ url: `cars/${id}` });
-      if (res?.data) {
-        setCar(res.data);
-      }
-    } catch (error) {
-      alert(error);
-    } finally {
-      setLoading(false);
+    let data = await axios({ url: `cars/${id}` });
+    if (data && data.data) {
+      setCar(data.data);
     }
   };
-
-  console.log(car);
+  async function handleDelete(id) {
+    await axios({ url: `cars/${id}`, method: "DELETE" });
+    alert("Successfully deleted");
+    navigate(-1);
+  }
 
   useEffect(() => {
     getSingleCar(id);
-  }, [id]);
+  }, []);
 
-  if (loading)
+  if (!car)
     return (
       <div className="flex flex-col items-center justify-center mt-[240px]">
         <h2 className="text-center text-3xl font-bold text-gray-800 mb-6 animate-pulse">
@@ -39,7 +35,6 @@ const CarsDetail = () => {
         <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
-  if (!car) return <h2>Mashinchalar yo'q </h2>;
 
   return (
     <div className="max-w-lg mx-auto bg-white shadow-xl rounded-2xl overflow-hidden border border-gray-200">
@@ -132,14 +127,29 @@ const CarsDetail = () => {
         </div>
 
         {/* Btn */}
-        <div>
+        <div className="flex gap-3">
           <button
             onClick={() => {
               navigate(`/edit/${id}`);
             }}
-            className="w-[200px] border-black border-2 h-[20px]"
-            icon={<Pencil2Icon />}
-          ></button>
+            className="w-[200px] h-[40px] flex items-center justify-center 
+             bg-blue-500 text-white font-semibold rounded-lg 
+             shadow hover:bg-blue-600 active:scale-95 
+             transition duration-200"
+          >
+            Tahrirlash
+          </button>
+
+          <button
+            danger={true}
+            onClick={() => handleDelete(id)}
+            className="w-[200px] h-[40px] flex items-center justify-center 
+             bg-red-500 text-white font-semibold rounded-lg 
+             shadow hover:bg-red-600 active:scale-95 
+             transition duration-200"
+          >
+            O'chirish
+          </button>
         </div>
       </div>
     </div>

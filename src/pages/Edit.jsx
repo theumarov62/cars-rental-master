@@ -1,33 +1,68 @@
 import { useNavigate, useParams } from "react-router-dom";
 import useAxios from "../hooks/useAxios";
 import { useEffect, useState } from "react";
-import { Input, InputNumber, Select } from "antd";
+import { Button, Input, InputNumber, Select, notification } from "antd";
 import { PlusCircledIcon, TrashIcon } from "@radix-ui/react-icons";
 
 function Edit() {
+  const [api, contextHolder] = notification.useNotification();
+  const openNotificationWithIcon = (type, { title, description }) => {
+    api[type]({
+      title,
+      description,
+    });
+  };
   const axios = useAxios();
   const { id } = useParams();
   const navigate = useNavigate();
   const [gallery, setGallery] = useState([]);
   const [car, setCar] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [drive, setDrive] = useState(null);
+  const [gearbox, setGearbox] = useState(null);
+
   const getSingleCar = async (id) => {
-    try {
-      const res = await axios({ url: `cars/${id}` });
-      if (res?.data) {
-        setCar(res.data);
-        setGallery(res.data.gallery);
-      }
-    } catch (error) {
-      alert(error);
-    } finally {
-      setLoading(false);
+    let data = await axios({ url: `cars/${id}` });
+
+    if (data && data.data) {
+      setCar(data.data);
+      setGallery(data.data.gallery);
+      setDrive(data.data.drive);
+      setGearbox(data.data.gearbox);
     }
   };
+
+  async function editCar(car) {
+    await axios({
+      url: `cars/${id}`,
+      method: "PATCH",
+      body: car,
+    });
+
+    setTimeout(() => {
+      navigate(-1);
+    }, 3000);
+    openNotificationWithIcon("info", {
+      title: `${id} Mashina`,
+      description: `Muvaffaqiyatli o'zgartirildi`,
+    });
+    setCar(data);
+    setGallery(data.gallery);
+    setDrive(data.drive);
+    setGearbox(data.gearbox);
+  }
 
   function handleGallery(url) {
     const result = gallery.filter((el) => el !== url);
     setGallery(result);
+  }
+
+  function selectDrive(value) {
+    setDrive(value);
+  }
+
+  function selectGearbox(value) {
+    setGearbox(value);
   }
 
   function addImage() {
@@ -41,15 +76,23 @@ function Edit() {
     }
   }
 
-  console.log(car);
-
   useEffect(() => {
     getSingleCar(id);
   }, [id]);
 
+  function handleSubmit(evt) {
+    evt.preventDefault();
+    const formData = new FormData(evt.target);
+    const result = { gearbox, drive, gallery };
+    formData.forEach((value, key) => {
+      result[key] = value;
+    });
+    editCar(result);
+  }
   return (
     car && (
       <div>
+        {contextHolder}
         <div className="mx-auto px-5 container">
           <button
             onClick={() => navigate(`/cars/${id}`)}
@@ -57,7 +100,7 @@ function Edit() {
           >
             ComeBack?
           </button>
-          <form className="px-10 flex flex-col gap-6">
+          <form onSubmit={handleSubmit} className="px-10 flex flex-col gap-6">
             <div className="grid gird-cols-2 gap-10">
               <div className="flex flex-col gap-2">
                 <label className="font-medium" htmlFor="name">
@@ -92,6 +135,7 @@ function Edit() {
                   Mashina tortish turi
                 </label>
                 <Select
+                  onChange={selectDrive}
                   defaultValue={car.drive}
                   name="drive"
                   options={[
@@ -109,6 +153,7 @@ function Edit() {
                   Uzatmalar qutisi
                 </label>
                 <Select
+                  onChange={selectGearbox}
                   defaultValue={car.gearbox}
                   name="gearbox"
                   options={[
@@ -122,7 +167,10 @@ function Edit() {
             <div className="flex gap-4">
               {gallery.map((el, index) => {
                 return (
-                  <div className="relative overflow-hidden group rounded-md w-20 h-20">
+                  <div
+                    className="relative overflow-hidden group rounded-md w-20 h-20"
+                    key={el}
+                  >
                     <img
                       className="w-full h-full object-center object-cover"
                       src={el}
@@ -149,6 +197,11 @@ function Edit() {
               >
                 <PlusCircledIcon className="w-4 h-4 text-slate-200 group-hover:text-blue-500" />
               </button>
+            </div>
+            <div className="flex gap-3">
+              <Button type="primary" htmlType="submit">
+                Saqlash
+              </Button>
             </div>
           </form>
         </div>
